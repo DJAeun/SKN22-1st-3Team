@@ -1,2 +1,3 @@
-# SKN22-1st-3Team
-Repository for SKN22-1st-3Team
+# SKNetworks 22기 첫번째 단위 프로젝트 "제로백"
+
+화이팅~!
