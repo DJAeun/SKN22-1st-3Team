@@ -60,7 +60,7 @@ with col2:
 # WORD CLOUD SECTION
 # ----------------------
 st.subheader("WORD CLOUD")
-st.image("sunrise.jpg", caption="Sunrise by the mountains")
+st.image("compos/sunrise.jpg", caption="Sunrise by the mountains")
 
 # ----------------------
 # BOTTOM: BLOG + SEARCH
