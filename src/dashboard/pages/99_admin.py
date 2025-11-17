@@ -184,7 +184,8 @@ ETL_PIPELINES: List[Dict[str, Any]] = [
         "steps": [
             "네이버 검색 API로 상위 글 수집",
             "본문 크롤링 + 형태소 분석",
-            "blog_article/blog_token_monthly/blog_wordcloud 저장",
+            "blog_article/blog_token_monthly 저장",
+            "blog_token 기반 워드클라우드 이미지 생성",
         ],
         "commands": [
             {
@@ -198,7 +199,22 @@ ETL_PIPELINES: List[Dict[str, Any]] = [
                     {"name": "max_articles", "label": "모델별 수집 글 개수", "type": "int", "arg": "--max-articles", "default": 3, "min_value": 1, "step": 1},
                     {"name": "summary_length", "label": "본문 요약 길이", "type": "int", "arg": "--summary-length", "default": 500, "min_value": 100, "step": 50},
                 ],
-            }
+            },
+            {
+                "key": "blog_generate_wc",
+                "label": "워드클라우드 이미지 생성",
+                "description": "generate_wordcloud.py – blog_token_monthly 기반 이미지 생성 후 blog_wordcloud에 upsert",
+                "script": "src/etl/blog/generate_wordcloud.py",
+                "params": [
+                    {"name": "run_id", "label": "Run ID", "type": "text", "arg": "--run-id", "default": _default_run_id},
+                    {"name": "month", "label": "기준 월 (YYYY-MM or YYYY-MM-DD)", "type": "text", "arg": "--month", "default": ""},
+                    {"name": "limit_models", "label": "모델 제한 (0=전체)", "type": "int", "arg": "--limit-models", "default": 0, "min_value": 0, "skip_if": lambda v: v is None or int(v) <= 0},
+                    {"name": "font_path", "label": "폰트 경로 (선택)", "type": "text", "arg": "--font-path", "default": ""},
+                    {"name": "width", "label": "이미지 가로(px)", "type": "int", "arg": "--width", "default": 800, "min_value": 100},
+                    {"name": "height", "label": "이미지 세로(px)", "type": "int", "arg": "--height", "default": 600, "min_value": 100},
+                    {"name": "max_words", "label": "최대 단어 수", "type": "int", "arg": "--max-words", "default": 100, "min_value": 10},
+                ],
+            },
         ],
     },
 ]
